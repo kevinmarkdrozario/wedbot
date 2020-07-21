@@ -20,43 +20,14 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
   
   function hoteldetails(agent) {
     const PhoneNumber = agent.parameter.PhoneNo;
-    //return getSpreadsheetData().then(res=> {
-      //  res.data.map(person=> {
-          //if(person.PhoneNumber === PhoneNumber)
-           // agent.add(`Here are the booking details of ${PhoneNumber}.Name : ${person.name}, RoomNo: ${person.RoomNo} , HotelName: ${person.HotelName} , HotelContactNo: ${person.HotelContactNo}`);
-       // });
-    let data;
-axios.get('https://sheetdb.io/api/v1/w9yu88kxvjkhb')
-  .then((response) => {
-    // handle success
-    data = response.data;
-    // console.log(data);
-    console.log(getDetails.bind(this)({HotelContactNo: '8836205619', data: data}));
-  }).catch((error) => {
-    // handle error
-    console.log(error);
-  });
-
-console.log(data);
-const getDetails = ({
-  Name = null,
-  PhoneNo = null,
-  HotelName = null,
-  RoomNo = null,
-  HotelContactNo = null, 
-  data
-}) => {
-  return data.find(record => {
-    return (Name == record.Name ||
-      PhoneNo == record.PhoneNo ||
-      HotelName == record.HotelName ||
-      RoomNo == record.RoomNo ||
-      HotelContactNo == record.HotelContactNo);
-  });
-};
-    
+    return getSpreadsheetData().then(res=> {
+        res.data.map(person=> {
+          if(person.PhoneNumber === PhoneNumber)
+            agent.add(`Here are the booking details of ${PhoneNumber}.Name : ${person.name}, RoomNo: ${person.RoomNo} , HotelName: ${person.HotelName} , HotelContactNo: ${person.HotelContactNo}`);
+        });
+    });
   }
- 
+
   function fallback(agent) {
     agent.add(`I didn't understand`);
     agent.add(`I'm sorry, can you try again?`);
